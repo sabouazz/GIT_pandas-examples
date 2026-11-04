@@ -1,3 +1,5 @@
+This project is shared between Alexia, Laurianne and Sabrina !
+
 # Pandas example
 
 This project is an usage example of `pandas`' library in Python.
