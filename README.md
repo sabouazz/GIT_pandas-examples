@@ -1,4 +1,4 @@
-This project is shared between Alexia, Laurianne and Sabrina !
+This project is shared between Alexia, Lauriane and Sabrina !
 
 # Pandas example
 
