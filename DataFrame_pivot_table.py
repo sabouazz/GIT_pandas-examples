@@ -7,15 +7,15 @@ import numpy as np
 # Load Data
 userHeader = ['user_id', 'gender', 'age', 'ocupation', 'zip']
 users = pd.read_csv('dataSet/users.txt', engine='python',
-                    sep='::', header=None, names=userHeader)
+                    sep='::', header=None, names=userHeader, encoding='latin-1')
 
 movieHeader = ['movie_id', 'title', 'genders']
 movies = pd.read_csv('dataSet/movies.txt', engine='python',
-                     sep='::', header=None, names=movieHeader)
+                     sep='::', header=None, names=movieHeader, encoding='latin-1')
 
 ratingHeader = ['user_id', 'movie_id', 'rating', 'timestamp']
 ratings = pd.read_csv('dataSet/ratings.txt', engine='python',
-                      sep='::', header=None, names=ratingHeader)
+                      sep='::', header=None, names=ratingHeader, encoding='latin-1')
 
 # Merge data
 mergeRatings = pd.merge(pd.merge(users, ratings), movies)
@@ -24,12 +24,17 @@ mergeRatings = pd.merge(pd.merge(users, ratings), movies)
 
 
 def cloneDF(df):
-    return pd.DataFrame(df.values.copy(), df.index.copy(), df.columns.copy()).convert_objects(convert_numeric=True)
+    return pd.DataFrame(
+        df.values.copy(), df.index.copy(), df.columns.copy()
+    ).infer_objects()
 
 
 # Simple pivot (Groupby + avg)
 df_1 = cloneDF(mergeRatings)
-df_1 = df_1.pivot_table(index=['movie_id', 'title'])
+df_1 = df_1.pivot_table(
+    index=['movie_id', 'title'],
+    values=['user_id', 'age', 'ocupation', 'rating', 'timestamp']
+)
 print('Columns(movie_id + title) to Index: \n%s' % df_1[:5])
 print('\n==================================================================\n')
 
